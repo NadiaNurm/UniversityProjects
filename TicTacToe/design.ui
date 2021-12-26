@@ -58,7 +58,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="1">
-        <widget class="QLabel" name="labelX2Y1">
+        <widget class="QLabelNew" name="labelX2Y1">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -74,7 +74,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="labelX2Y2">
+        <widget class="QLabelNew" name="labelX2Y2">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -90,7 +90,7 @@
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QLabel" name="labelX3Y1">
+        <widget class="QLabelNew" name="labelX3Y1">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -106,7 +106,7 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLabel" name="labelX3Y3">
+        <widget class="QLabelNew" name="labelX3Y3">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -122,7 +122,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="labelX1Y3">
+        <widget class="QLabelNew" name="labelX1Y3">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -138,7 +138,7 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLabel" name="labelX3Y2">
+        <widget class="QLabelNew" name="labelX3Y2">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -154,7 +154,7 @@
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="labelX1Y1">
+        <widget class="QLabelNew" name="labelX1Y1">
          <property name="styleSheet">
           <string notr="true">border-color: rgb(0, 0, 0);</string>
          </property>
@@ -173,7 +173,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="labelX2Y3">
+        <widget class="QLabelNew" name="labelX2Y3">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -189,7 +189,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="labelX1Y2">
+        <widget class="QLabelNew" name="labelX1Y2">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -221,6 +221,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLabelNew</class>
+   <extends>QLabel</extends>
+   <header>qlabelnew.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Res.qrc"/>
  </resources>
