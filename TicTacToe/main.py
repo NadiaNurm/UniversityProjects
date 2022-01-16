@@ -30,7 +30,7 @@ class Main_App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.labelX1Y3.clicked.connect(self.setImage)
         self.labelX2Y3.clicked.connect(self.setImage)
         self.labelX3Y3.clicked.connect(self.setImage)
-
+        self.buttonNewGame.clicked.connect(self.resetField)
         self.field = [
                         [self.labelX1Y1,self.labelX2Y1,self.labelX3Y1],
                         [self.labelX1Y2,self.labelX2Y2,self.labelX3Y2],
@@ -54,68 +54,84 @@ class Main_App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             sender.setPixmap(QtGui.QPixmap(self.circleImg))
             sender.state = State.circle
         self.counter += 1
-        self.checkWin()
+        Xwin, Owin = self.checkWin()
+        if Xwin or Owin:
+            for row in self.field:
+                for label in row:
+                    label.setEnabled(False)
+            
+            self.showMessage(Xwin,Owin)
 
     def checkWin(self):
-        Xwin = False
-        Owin = False
-        for row in self.field:
-            Xwin = True
-            for label in row:
-                if label.state != State.cross:
-                    Xwin = False
-                    break
-            Owin = True
-            for label in row:
-                if label.state != State.circle:
-                    Owin = False
-                    break
-            if Xwin:
+        def check_field(field_list):
+            for row in field_list:
+                Xwin = True
                 for label in row:
-                    label.setPixmap(QtGui.QPixmap(self.crossWinImg))
-            if Owin:
+                    if label.state != State.cross:
+                        Xwin = False
+                        break
+                Owin = True
                 for label in row:
-                    label.setPixmap(QtGui.QPixmap(self.circleWinImg))
-                
-
-    #def win():
-    #    Xwin = False
-    #    Owin = False
-    #    field_T = [[],[],[]] # меняем строики и столбцы местами, создаем транспонированную матрицу 
-    #    field_diagonal = [[],[]] # матрица, в которую запишем диагонали
-    #    for row in field: # забираем строку из field, если в строке три О или три Х, то это победа
-    #        i = row.count('X') 
-    #        j = row.count('O')
-    #        if i == 3:
-    #            Xwin = True
-    #        if j == 3:
-    #            Owin = True
-    #        field_T[0].append(row[0]) #транспонируем матрицу и опять считаем количество О или Х
-    #        field_T[1].append(row[1])
-    #        field_T[2].append(row[2])
-    #        for _ in field_T:
-    #            k = _.count('X')
-    #            m = _.count('O')
-    #            if k == 3:
-    #                Xwin = True
-    #            if m == 3:
-    #                Owin = True
-    #    field_diagonal[0].append(field[0][0]) #записываем диагонали в первые две строки и опять считаем количество О или Х
-    #    field_diagonal[0].append(field[1][1])
-    #    field_diagonal[0].append(field[2][2])
-    #    field_diagonal[1].append(field[0][2])
-    #    field_diagonal[1].append(field[1][1])
-    #    field_diagonal[1].append(field[2][0])
-    #    for _ in field_diagonal:
-    #            n = _.count('X')
-    #            o = _.count('O')
-    #            if n == 3:
-    #                Xwin = True
-    #            if o == 3:
-    #                Owin = True
-    #    return Xwin,Owin
-
+                    if label.state != State.circle:
+                        Owin = False
+                        break
+                if Xwin:
+                    for label in row:
+                        label.setPixmap(QtGui.QPixmap(self.crossWinImg))
+                    return True,False
+                if Owin:
+                    for label in row:
+                        label.setPixmap(QtGui.QPixmap(self.circleWinImg))
+                    return False,True
+            return False,False      
         
+        Xwin, Owin = check_field(self.field) 
+        if Xwin or Owin:
+            return Xwin,Owin
+        
+        field_T = [[],[],[]]
+        for i in range(3):
+            for j in range(3):
+                field_T[i].append(self.field[j][i])   
+
+        Xwin, Owin = check_field(field_T) 
+        if Xwin or Owin:
+            return Xwin,Owin
+
+        field_diagonal = [[],[]]
+        field_diagonal[0].append(self.field[0][0]) #записываем диагонали в первые две строки и опять считаем количество О или Х
+        field_diagonal[0].append(self.field[1][1])
+        field_diagonal[0].append(self.field[2][2])
+        field_diagonal[1].append(self.field[0][2])
+        field_diagonal[1].append(self.field[1][1])
+        field_diagonal[1].append(self.field[2][0])
+        
+        Xwin, Owin = check_field(field_diagonal) 
+        if Xwin or Owin:
+            return Xwin,Owin 
+        
+        return False,False
+
+    def resetField(self):
+        for row in self.field:
+            for label in row:
+                label.setEnabled(True)
+                label.setPixmap(QtGui.QPixmap(self.emptyImg))
+                label.state = State.empty
+        self.counter = 1
+
+
+
+    def showMessage(self,Xwin,Owin):
+        msgBox = QtWidgets.QMessageBox()
+        msgBox.setWindowTitle("Победа!")
+        message = 'Нолики'
+        if Xwin:
+            message = 'Крестики'
+        msgBox.setText(f'Игра окончена! {message} победили!!!')
+        msgBox.setIcon(QtWidgets.QMessageBox.Information)
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        x = msgBox.exec_()
         
  
 
