@@ -1,9 +1,0 @@
-<RCC>
-  <qresource prefix="img">
-    <file>circle_win.png</file>
-    <file>cross_win.png</file>
-    <file>circle.png</file>
-    <file>cross.png</file>
-    <file>empty.png</file>
-  </qresource>
-</RCC>
